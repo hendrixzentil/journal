@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal | Thinking | Hendrix Zentil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;600;700&family=Playfair+Display:wght@400;500&family=Playfair+Display+SC:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* Font styles */
+    .header-font {
+      font-family: 'Playfair Display SC', serif;
+    }
+  
+    .logo-font {
+      font-family: 'Playfair Display SC', serif;
+    }
+  
+    .genre-font {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 400;
+      color: blue;
+      text-decoration: underline;
+      font-size: 0.875rem;
+      margin-right: 0px;
+    }
+  
+    .title-font {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      text-align: left;
+    }
+  
+    .subtitle-font {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 400;
+      text-align: left;
+    }
+  
+    .date-font {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-style: italic;
+      color: gray;
+      text-align: left;
+    }
+  
+    .body-text {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      text-align: left;
+    }
+  
+    .caption-text {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 0.875rem;
+      color: gray;
+      text-align: center;
+    }
+  
+    /* Layout styles */
+    .body-text p {
+    margin-bottom: 1.5rem; /* Adds space after each paragraph */
+    }
+    /* Link styles */
+    .body-text a {
+     color: blue;
+      text-decoration: underline;
+    }
+/* Optional: change color on hover for better usability */
+.body-text a:hover {
+  color: darkblue;
+}
+    .content-width {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+  
+    #article-genres {
+      margin-bottom: -25px; /* Adjust genre spacing */
+    }
+  
+    .image-width {
+      max-width: calc(1.3 * 60%);
+      margin: 0 auto;
+    }
+  </style>
+  
+</head>
+<body class="bg-white text-black">
+
+  <!-- Header -->
+  <header class="bg-black text-white p-4 flex justify-between items-center">
+    <div class="text-lg header-font uppercase">
+      <a href="genre.html" class="hover:text-gray-400">Genre</a>
+    </div>
+    <nav class="space-x-8 text-lg header-font uppercase">
+      <a href="about.html" class="hover:text-gray-400">About</a>
+      <a href="contact.html" class="hover:text-gray-400">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Logo -->
+  <div class="text-center mt-4">
+    <a href="index.html" class="text-5xl logo-font capitalize hover:text-black-500">Journal | Hendrix Zentil</a>
+    <hr class="w-2/3 border-gray-800 mx-auto mt-5">
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-screen-lg mx-auto p-6">
+    <!-- Genres Section -->
+    <div id="article-genres" class="content-width mb-4 flex items-center gap-0">
+      <!-- Genre tags will be inserted dynamically -->
+    </div>
+
+    <!-- Title Section -->
+    <section id="title-section" class="content-width my-10">
+      <h1 id="article-title" class="text-3xl md:text-5xl title-font"></h1>
+      <p id="article-subtitle" class="text-lg subtitle-font mt-4"></p>
+      <p id="article-date" class="date-font mt-2"></p>
+    </section>
+
+    <!-- Image Section -->
+    <section id="image-section" class="image-width text-center my-8">
+      <img id="article-image" src="" alt="" class="w-full mx-auto">
+      <p id="image-caption" class="caption-text mt-2"></p>
+    </section>
+
+    <!-- Body Section -->
+    <section id="body-section" class="content-width mt-10">
+      <article id="article-body" class="body-text"></article>
+    </section>
+
+    <!-- Signature Section -->
+    <section id="signature-section" class="content-width text-center mt-10 mb-20">
+      <img id="signature-image" src="/images/Signature.jpg" alt="Author's signature" class="mx-auto h-auto w-1/2 max-w-xs">
+    </section>
+  </main>
+
+  <script>
+    /**
+     * Fetch and render article content based on the query parameter in the URL.
+     */
+    async function fetchAndRenderArticle() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const file = urlParams.get('file'); // File name from query parameter
+  
+      if (!file) {
+        document.body.innerHTML = '<p class="text-center text-xl mt-20">Article not found.</p>';
+        return;
+      }
+  
+      try {
+        const response = await fetch(file);
+        const article = await response.json();
+  
+        // Set Title, Subtitle, and Date
+        document.getElementById('article-title').innerText = article.title;
+        document.getElementById('article-subtitle').innerText = article.description;
+        document.getElementById('article-date').innerText = `${article.date} | ${article.time} ${article.timezone}`;
+  
+        // Set Genres
+        const genresContainer = document.getElementById('article-genres');
+        genresContainer.innerHTML = ""; // Clear existing genres
+        article.genres.forEach((genre, index) => {
+          // Create a genre link
+          const genreLink = document.createElement('a');
+          genreLink.href = `genre.html?genre=${encodeURIComponent(genre)}`;
+          genreLink.innerText = genre;
+          genreLink.classList.add('genre-font', 'flex', 'items-center');
+          genresContainer.appendChild(genreLink);
+  
+          // Add a "|" separator if not the last genre
+          if (index < article.genres.length - 1) {
+            const separator = document.createElement('span');
+            separator.innerText = "|";
+            separator.classList.add('text-gray-500', 'px-2', 'flex', 'items-center');
+            genresContainer.appendChild(separator);
+          }
+        });
+  
+        // Set Image and Caption for the featured image
+        const featuredImage = article.images?.[0];
+        if (featuredImage) {
+          document.getElementById('article-image').src = featuredImage.url;
+          document.getElementById('article-image').alt = featuredImage.description;
+          document.getElementById('image-caption').innerText = `${featuredImage.description} (${featuredImage.credit})`;
+        }
+  
+        // Process the body content to add captions to all images
+        let bodyContent = '';
+        if (Array.isArray(article.body)) {
+          // Create a temporary container to parse the HTML
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = article.body.join('');
+          
+          // Find all images in the content
+          const images = tempDiv.querySelectorAll('img');
+          images.forEach(img => {
+            const imgSrc = img.getAttribute('src');
+            // Find the matching image metadata
+            const matchingImage = article.images.find(image => image.url === imgSrc);
+            
+            if (matchingImage) {
+              // Create a wrapper div for the image and caption
+              const wrapper = document.createElement('div');
+              wrapper.className = 'image-container text-center my-6';
+              
+              // Move the image into the wrapper
+              img.setAttribute('alt', matchingImage.description);
+              wrapper.appendChild(img.cloneNode(true));
+              
+              // Add caption
+              const caption = document.createElement('p');
+              caption.className = 'caption-text mt-2';
+              caption.innerText = `${matchingImage.description} (${matchingImage.credit})`;
+              wrapper.appendChild(caption);
+              
+              // Replace the original image with the wrapper
+              img.parentNode.replaceChild(wrapper, img);
+            }
+          });
+          
+          bodyContent = tempDiv.innerHTML;
+        } else {
+          bodyContent = article.body;
+        }
+  
+        // Set Body Content
+        document.getElementById('article-body').innerHTML = bodyContent;
+        
+        // Ensure signature section is visible
+        document.getElementById('signature-section').style.display = 'block';
+        
+      } catch (error) {
+        console.error('Error fetching article:', error);
+        document.body.innerHTML = '<p class="text-center text-xl mt-20">Error loading article.</p>';
+      }
+    }
+  
+    // Fetch and render the article on page load
+    fetchAndRenderArticle();
+  </script>
+  
+</body>
+</html>

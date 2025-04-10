@@ -1,0 +1,23 @@
+{
+  "title": "Sample Article Title",
+  "date": "2024-11-20",
+  "time": "2:45 PM",
+  "timezone": "EST",
+  "description": "Sample description",
+  "genres": ["Finance", "Opinion"],
+  "images": [
+    {
+      "url": "testimage.jpg",
+      "description": "Main image description",
+      "credit": "Photo by Sample Photographer"
+    }
+  ],
+  "body": [
+    "<p>This is the introductory paragraph of the article. It provides context and sets up the main ideas discussed in the article.</p>",
+    "<p>This is the main content of the article. It contains detailed information, examples, and arguments.</p>",
+    "<p>According to <a href='https://example.com/finance-report' target='_blank'>the latest analysis</a>, investment in renewable energy has increased by 35% this year.</p>",
+    "<p>Here's a visualization of the data:</p>",
+    "<img src='renewable-investment-graph.png' alt='Renewable Energy Investment 2024' style='max-width:100%; height:auto;'>",
+    "<p>As you can see from the graph above, solar energy has received the highest investment.</p>"
+  ]
+}

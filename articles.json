@@ -1,0 +1,30 @@
+{
+  "general": [
+    {
+      "title": "Do You Know Yourself?",
+      "date": "2025-4-6",
+      "time": "11:03 PM",
+      "timezone": "EST",
+      "description": "The life of the social chameleon can be much more, behind the scenes.",
+      "file": "article_4_6_2025.json"
+    },
+    {
+      "title": "Understanding the Trump Administration's Tariff Formula",
+      "date": "2025-4-9",
+      "time": "8:48 PM",
+      "timezone": "EST",
+      "description": "It seems elegantly simple, but close inspection reveals a myriad of issues.",
+      "file": "article_4_9_2025.json"
+    }
+  ],
+  "readings": [
+    {
+      "title": "You² | Price Pritchett",
+      "date": "2025-4-9",
+      "time": "10:15 AM",
+      "timezone": "EST",
+      "description": "A motivating read that stands strong despite its brevity, though esoteric at times.",
+      "file": "reading_4_9_2025.json"
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Journal | Hendrix Zentil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;600;700&family=Playfair+Display:wght@400;500&family=Playfair+Display+SC:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* Font styles */
+    .header-font {
+      font-family: 'Playfair Display SC', serif;
+    }
+  
+    .logo-font {
+      font-family: 'Playfair Display SC', serif;
+    }
+    
+    .title-font {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      text-align: left;
+    }
+  
+    .body-text {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      text-align: left;
+    }
+  
+    /* Layout styles */
+    .body-text p {
+      margin-bottom: 1.5rem; /* Adds space after each paragraph */
+    }
+    
+    .content-width {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+    
+    /* Form styles */
+    .form-input {
+      font-family: 'Libre Franklin', sans-serif;
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1.5rem;
+      background-color: #f9f9f9;
+      border: none;
+      border-radius: 8px;
+      transition: box-shadow 0.3s;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+    
+    .form-button {
+      font-family: 'Playfair Display SC', serif;
+      background-color: black;
+      color: white;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      align-self: flex-start;
+    }
+    
+    .form-button:hover {
+      background-color: #333;
+    }
+    
+    .contact-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+    
+    .contact-info {
+      flex: 1;
+      max-width: 40%;
+    }
+    
+    .contact-form {
+      flex: 1;
+      max-width: 55%;
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+    }
+    
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .contact-container {
+        flex-direction: column;
+      }
+      
+      .contact-info, .contact-form {
+        max-width: 100%;
+        margin-bottom: 2rem;
+      }
+      
+      .content-width {
+        max-width: 85%;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white text-black">
+
+  <!-- Header -->
+  <header class="bg-black text-white p-4 flex justify-between items-center">
+    <div class="text-lg header-font uppercase">
+      <a href="genre.html" class="hover:text-gray-400">Genre</a>
+    </div>
+    <nav class="space-x-8 text-lg header-font uppercase">
+      <a href="about.html" class="hover:text-gray-400">About</a>
+      <a href="contact.html" class="hover:text-gray-400">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Logo -->
+  <div class="text-center mt-4">
+    <a href="index.html" class="text-5xl logo-font capitalize hover:text-black-500">Journal | Hendrix Zentil</a>
+    <hr class="w-2/3 border-gray-800 mx-auto mt-5">
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-screen-lg mx-auto p-6">
+    <!-- Title Section -->
+    <section class="content-width my-10">
+      <h1 class="text-4xl title-font mb-8">Contact.</h1>
+      
+      <div class="contact-container">
+        <div class="contact-info">
+          <div class="body-text">
+            <p>Your interest is greatly appreciated. I look forward to responding to your queries!</p>
+            <p>Best Regards,<br>Hendrix Z.</p>
+          </div>
+        </div>
+        
+        <!-- Contact Form with web3forms -->
+        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="341122c1-1065-497c-8376-7fe7f5c979f8">
+          <input type="text" id="name" name="name" placeholder="Your Name" class="form-input" required>
+          <input type="email" id="email" name="email" placeholder="Email" class="form-input" required>
+          <textarea id="message" name="message" rows="6" placeholder="Message" class="form-input" required></textarea>
+          <button type="submit" class="form-button">Send Now</button>
+        </form>
+      </div>
+      
+      <!-- Alternative Contact -->
+      <div class="body-text mt-12">
+        <h2 class="text-2xl title-font mb-4">Other Ways to Connect</h2>
+        <p>If you prefer to connect on social media or through other channels:</p>
+        <ul class="list-disc ml-6 mb-6">
+          <li class="mb-2">LinkedIn: <a href="https://linkedin.com/in/hendrixzentil" class="text-blue-600 hover:text-blue-800">Hendrix Zentil</a></li>
+          <li class="mb-2">Email: <a href="mailto:hz30973n@pace.edu" class="text-blue-600 hover:text-blue-800">hz30973n@pace.edu</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>

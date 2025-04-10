@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Genres | Journal | Hendrix Zentil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;600;700&family=Playfair+Display:wght@400;500&family=Playfair+Display+SC:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* Font styles */
+    .header-font {
+      font-family: 'Playfair Display SC', serif;
+    }
+  
+    .logo-font {
+      font-family: 'Playfair Display SC', serif;
+    }
+    
+    .title-font {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      text-align: left;
+    }
+    
+    .article-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      font-size: 1.75rem;
+    }
+    
+    .article-subtitle { 
+      font-family: 'Libre Franklin', sans-serif; 
+      font-weight: 400; 
+      font-size: 1.1rem; 
+    }
+    
+    .date-font { 
+      font-family: 'Playfair Display', serif; 
+      font-weight: 500; 
+      color: gray; 
+      font-style: italic; 
+    }
+  
+    .body-text {
+      font-family: 'Libre Franklin', sans-serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      text-align: left;
+    }
+  
+    /* Layout styles */
+    .body-text p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .content-width {
+      max-width: 75%;
+      margin: 0 auto;
+    }
+    
+    /* Tab styles */
+    .tab {
+      font-family: 'Playfair Display', serif;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-bottom: 2px solid transparent;
+    }
+    
+    .tab:hover {
+      color: #4a4a4a;
+    }
+    
+    .tab.active {
+      border-bottom: 2px solid black;
+      font-weight: 500;
+    }
+    
+    /* Article card styles */
+    .article-card {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid #eee;
+      transition: background-color 0.3s;
+    }
+    
+    .article-card:hover {
+      background-color: #f9f9f9;
+    }
+    
+    /* Tab dropdown for mobile */
+    .tab-dropdown {
+      display: none;
+      width: 100%;
+      padding: 0.75rem;
+      font-family: 'Playfair Display', serif;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Hide tab content by default */
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    @media (max-width: 768px) {
+      .tabs-container {
+        display: none;
+      }
+      
+      .tab-dropdown {
+        display: block;
+      }
+      
+      .content-width {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body class="bg-white text-black">
+
+  <!-- Header -->
+  <header class="bg-black text-white p-4 flex justify-between items-center">
+    <div class="text-lg header-font uppercase">
+      <a href="genre.html" class="hover:text-gray-400">Genre</a>
+    </div>
+    <nav class="space-x-8 text-lg header-font uppercase">
+      <a href="about.html" class="hover:text-gray-400">About</a>
+      <a href="contact.html" class="hover:text-gray-400">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Logo -->
+  <div class="text-center mt-4">
+    <a href="index.html" class="text-5xl logo-font capitalize hover:text-black-500">Journal | Hendrix Zentil</a>
+    <hr class="w-2/3 border-gray-800 mx-auto mt-5">
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-screen-lg mx-auto p-6">
+    <!-- Title Section -->
+    <section class="content-width my-3">
+      <h1 class="text-4xl title-font mb-6 text-center">Explore by Genre</h1>
+
+      <!-- Tab Navigation for Desktop -->
+      <div class="tabs-container flex flex-wrap border-b border-gray-300 mb-6">
+        <!-- Tabs will be dynamically generated here -->
+        <div id="tabs-loading" class="w-full text-center py-4">
+          <div class="inline-block h-6 w-6 animate-spin rounded-full border-2 border-solid border-black border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+          <span class="ml-2">Loading genres...</span>
+        </div>
+      </div>
+      
+      <!-- Tab Dropdown for Mobile -->
+      <select class="tab-dropdown" id="genre-dropdown">
+        <!-- Options will be dynamically generated here -->
+        <option value="loading" disabled selected>Loading genres...</option>
+      </select>
+      
+      <!-- Tab Content Sections -->
+      <div id="tab-contents">
+        <!-- Tab content will be dynamically generated here -->
+        <div id="content-loading" class="text-center py-8">
+          <div class="inline-block h-8 w-8 animate-spin rounded-full border-2 border-solid border-black border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+          <p class="mt-4">Loading articles...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /**
+     * Fetch all articles and organize them by genre
+     */
+    async function fetchAndOrganizeByGenre() {
+      try {
+        // Fetch articles index
+        const response = await fetch('articles.json');
+        const articlesIndex = await response.json();
+        
+        // Combine all article types from the index
+        const allArticlesMeta = [
+          ...articlesIndex.general,
+          ...articlesIndex.readings
+        ];
+        
+        // Initialize genre-based article collections
+        const articlesByGenre = {
+          'All': []
+        };
+        
+        // Fetch each article's details to extract genres
+        for (const articleMeta of allArticlesMeta) {
+          try {
+            const articleResponse = await fetch(articleMeta.file);
+            const articleData = await articleResponse.json();
+            
+            const articleWithData = {
+              ...articleMeta,
+              title: articleData.title || articleMeta.title,
+              description: articleData.description || articleMeta.description,
+              date: articleData.date || articleMeta.date,
+              genres: articleData.genres || []
+            };
+            
+            // Add to "All" category
+            articlesByGenre['All'].push(articleWithData);
+            
+            // Add this article to each of its genres
+            if (articleData.genres && articleData.genres.length > 0) {
+              for (const genre of articleData.genres) {
+                if (!articlesByGenre[genre]) {
+                  articlesByGenre[genre] = [];
+                }
+                articlesByGenre[genre].push(articleWithData);
+              }
+            }
+          } catch (articleError) {
+            console.error(`Error fetching article ${articleMeta.file}:`, articleError);
+          }
+        }
+        
+        // Sort articles by date (newest first) within each genre
+        for (const genre in articlesByGenre) {
+          articlesByGenre[genre].sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            return dateB - dateA;
+          });
+        }
+        
+        // Sort genres by article count (most first)
+        const sortedGenres = Object.keys(articlesByGenre).sort((a, b) => {
+          if (a === 'All') return -1; // "All" always comes first
+          if (b === 'All') return 1;
+          return articlesByGenre[b].length - articlesByGenre[a].length;
+        });
+        
+        // Create tab navigation
+        createTabNavigation(sortedGenres, articlesByGenre);
+        
+        // Create tab contents
+        createTabContents(sortedGenres, articlesByGenre);
+        
+        // Set up event listeners for tabs
+        setupTabEventListeners();
+        
+        // Check URL for genre parameter and activate that tab if present
+        const urlParams = new URLSearchParams(window.location.search);
+        const genreParam = urlParams.get('genre');
+        if (genreParam && sortedGenres.includes(genreParam)) {
+          activateTab(genreParam);
+        } else if (sortedGenres.length > 0) {
+          activateTab(sortedGenres[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+        document.getElementById('tabs-loading').innerHTML = '<p class="text-center text-red-500 py-4">Failed to load genres. Please try again later.</p>';
+        document.getElementById('content-loading').innerHTML = '<p class="text-center text-red-500 py-8">Failed to load articles. Please try again later.</p>';
+      }
+    }
+    
+    /**
+     * Create tab navigation elements
+     */
+    function createTabNavigation(genres, articlesByGenre) {
+      const tabsContainer = document.querySelector('.tabs-container');
+      const dropdown = document.getElementById('genre-dropdown');
+      
+      // Clear loading indicators
+      tabsContainer.innerHTML = '';
+      dropdown.innerHTML = '';
+      
+      // Create tabs and dropdown options
+      genres.forEach(genre => {
+        const articleCount = articlesByGenre[genre].length;
+        
+        // Create tab for desktop
+        const tab = document.createElement('div');
+        tab.classList.add('tab');
+        tab.dataset.genre = genre;
+        tab.innerHTML = `${genre} <span class="text-sm text-gray-500">(${articleCount})</span>`;
+        tabsContainer.appendChild(tab);
+        
+        // Create option for mobile dropdown
+        const option = document.createElement('option');
+        option.value = genre;
+        option.innerText = `${genre} (${articleCount})`;
+        dropdown.appendChild(option);
+      });
+    }
+    
+    /**
+     * Create tab content sections
+     */
+    function createTabContents(genres, articlesByGenre) {
+      const tabContents = document.getElementById('tab-contents');
+      
+      // Clear loading indicator
+      tabContents.innerHTML = '';
+      
+      // Create content section for each genre
+      genres.forEach(genre => {
+        const contentSection = document.createElement('div');
+        contentSection.classList.add('tab-content');
+        contentSection.id = `content-${genre.toLowerCase().replace(/\s+/g, '-')}`;
+        
+        const articles = articlesByGenre[genre];
+        
+        if (articles.length === 0) {
+          contentSection.innerHTML = '<p class="text-center text-gray-500 py-8">No articles yet in this genre.</p>';
+        } else {
+          // Create articles list
+          articles.forEach(article => {
+            const articleEl = createArticleElement(article);
+            contentSection.appendChild(articleEl);
+          });
+        }
+        
+        tabContents.appendChild(contentSection);
+      });
+    }
+    
+    /**
+     * Create an article element
+     */
+    function createArticleElement(article) {
+      const articleEl = document.createElement('article');
+      articleEl.classList.add('article-card');
+      
+      const titleEl = document.createElement('h3');
+      titleEl.classList.add('article-title', 'hover:text-gray-500');
+      
+      const linkEl = document.createElement('a');
+      linkEl.href = `article.html?file=${encodeURIComponent(article.file)}`;
+      linkEl.innerText = article.title;
+      
+      titleEl.appendChild(linkEl);
+      
+      const descriptionEl = document.createElement('p');
+      descriptionEl.classList.add('mt-2', 'article-subtitle');
+      descriptionEl.innerText = article.description;
+      
+      const metaEl = document.createElement('div');
+      metaEl.classList.add('flex', 'flex-wrap', 'gap-2', 'mt-2', 'items-center');
+      
+      const dateEl = document.createElement('p');
+      dateEl.classList.add('date-font');
+      dateEl.innerText = `${article.date} | ${article.time} ${article.timezone}`;
+      metaEl.appendChild(dateEl);
+      
+      // Add genre tags if not in the "All" tab
+      if (article.genres && article.genres.length > 0) {
+        const separator = document.createElement('span');
+        separator.classList.add('text-gray-400');
+        separator.innerText = '•';
+        metaEl.appendChild(separator);
+        
+        const genresEl = document.createElement('div');
+        genresEl.classList.add('flex', 'flex-wrap', 'gap-2');
+        
+        article.genres.forEach((genre, index) => {
+          const genreEl = document.createElement('span');
+          genreEl.classList.add('text-sm', 'text-blue-600', 'hover:underline', 'cursor-pointer');
+          genreEl.innerText = genre;
+          
+          // Add click event to switch to that genre tab
+          genreEl.addEventListener('click', (e) => {
+            e.preventDefault();
+            activateTab(genre);
+          });
+          
+          genresEl.appendChild(genreEl);
+        });
+        
+        metaEl.appendChild(genresEl);
+      }
+      
+      articleEl.appendChild(titleEl);
+      articleEl.appendChild(descriptionEl);
+      articleEl.appendChild(metaEl);
+      
+      return articleEl;
+    }
+    
+    /**
+     * Set up event listeners for tab navigation
+     */
+    function setupTabEventListeners() {
+      // Desktop tabs
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const genre = tab.dataset.genre;
+          activateTab(genre);
+        });
+      });
+      
+      // Mobile dropdown
+      document.getElementById('genre-dropdown').addEventListener('change', (e) => {
+        const genre = e.target.value;
+        activateTab(genre);
+      });
+    }
+    
+    /**
+     * Activate a specific tab
+     */
+    function activateTab(genre) {
+      // Update desktop tabs
+      document.querySelectorAll('.tab').forEach(tab => {
+        if (tab.dataset.genre === genre) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+      
+      // Update mobile dropdown
+      document.getElementById('genre-dropdown').value = genre;
+      
+      // Show corresponding content
+      document.querySelectorAll('.tab-content').forEach(content => {
+        if (content.id === `content-${genre.toLowerCase().replace(/\s+/g, '-')}`) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+    }
+    
+    // Fetch and organize articles when the page loads
+    document.addEventListener('DOMContentLoaded', fetchAndOrganizeByGenre);
+  </script>
+
+</body>
+</html>

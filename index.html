@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal | Hendrix Zentil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&family=Playfair+Display:wght@400;500&family=Playfair+Display+SC:wght@400&display=swap" rel="stylesheet">
+  <style>
+    .header-font { font-family: 'Playfair Display SC', serif; }
+    .logo-font { font-family: 'Playfair Display SC', serif; }
+    .slogan-font { font-family: 'Avenir', sans-serif; }
+    .section-title { font-family: 'Libre Franklin', sans-serif; font-weight: 700; }
+    .article-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      font-size: 1.75rem;
+    }
+    .article-subtitle { font-family: 'Libre Franklin', sans-serif; font-weight: 400; font-size: 1.1rem; }
+    .date-font { font-family: 'Playfair Display', serif; font-weight: 500; color: gray; font-style: italic; }
+  </style>
+</head>
+<body class="bg-white text-black">
+
+  <!-- Header -->
+  <header class="bg-black text-white p-4 flex justify-between items-center" role="banner">
+    <div class="text-lg header-font uppercase">
+      <a href="genre.html" class="hover:text-gray-400">Genre</a>
+    </div>
+    <nav class="space-x-8 text-lg header-font uppercase" role="navigation" aria-label="Main Navigation">
+      <a href="about.html" class="hover:text-gray-400">About</a>
+      <a href="contact.html" class="hover:text-gray-400">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-screen-lg mx-auto p-6" role="main">
+    <!-- Logo and Slogan -->
+    <section class="text-center my-10">
+      <h1 class="text-4xl md:text-6xl logo-font capitalize">Journal | Hendrix Zentil</h1>
+      <div class="flex items-center justify-center mt-2">
+        <hr class="w-1/4 border-gray-300">
+        <p class="text-lg md:text-xl slogan-font mx-4 tracking-wide">A ‎ V O I C E ‎  O F ‎  G E N ‎ Z</p>
+        <hr class="w-1/4 border-gray-300">
+      </div>
+    </section>
+
+    <!-- Sections -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 relative">
+      <!-- General Section -->
+      <section id="general-section" class="pr-5" role="region" aria-labelledby="general-heading">
+        <h2 id="general-heading" class="text-2xl section-title mb-4">General</h2>
+      </section>
+
+      <!-- Divider Line -->
+      <div class="hidden md:block absolute top-0 bottom-0 left-1/2 transform -translate-x-1/2 border-l border-gray-300"></div>
+
+      <!-- Readings Section -->
+      <section id="readings-section" class="pl-5" role="region" aria-labelledby="readings-heading">
+        <h2 id="readings-heading" class="text-2xl section-title mb-4">Readings</h2>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    /**
+     * Fetch JSON data and pass it to render functions.
+     */
+    async function fetchAndRenderArticles() {
+      try {
+        const response = await fetch('articles.json');
+        const articles = await response.json();
+
+        // Sort and render only the latest 3 articles for each section
+        renderArticles('general-section', getLatestArticles(articles.general, 3));
+        renderArticles('readings-section', getLatestArticles(articles.readings, 3));
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+      }
+    }
+
+    /**
+     * Get the latest N articles based on date.
+     * @param {Array} articles - An array of article objects.
+     * @param {number} limit - The number of latest articles to return.
+     * @returns {Array} - Sorted and limited array of articles.
+     */
+    function getLatestArticles(articles, limit) {
+      return articles
+        .sort((a, b) => new Date(b.date) - new Date(a.date)) // Sort by date (newest first)
+        .slice(0, limit); // Take only the first `limit` articles
+    }
+
+    /**
+     * Render articles for a specific section.
+     * @param {string} sectionId - The ID of the section container.
+     * @param {Array} articles - An array of article objects.
+     */
+    function renderArticles(sectionId, articles) {
+      const section = document.getElementById(sectionId);
+      articles.forEach(article => {
+        const articleEl = createArticleElement(article);
+        section.appendChild(articleEl);
+      });
+    }
+
+    /**
+     * Create an article element.
+     * @param {Object} article - The article data.
+     * @returns {HTMLElement} - The article element.
+     */
+    function createArticleElement(article) {
+      const articleEl = document.createElement('article');
+      articleEl.classList.add('mb-6');
+      articleEl.setAttribute('role', 'article');
+
+      const titleEl = createArticleTitle(article.title, `article.html?file=${encodeURIComponent(article.file)}`);
+      const descriptionEl = createArticleDescription(article.description);
+
+      const dateEl = document.createElement('p');
+      dateEl.classList.add('date-font');
+      dateEl.innerText = `${article.date} | ${article.time} ${article.timezone}`;
+
+      articleEl.appendChild(titleEl);
+      articleEl.appendChild(descriptionEl);
+      articleEl.appendChild(dateEl);
+
+      return articleEl;
+    }
+
+    /**
+     * Create the article title element with a link.
+     * @param {string} title - The article title.
+     * @param {string} link - The URL to navigate to.
+     * @returns {HTMLElement} - The title element wrapped in a link.
+     */
+    function createArticleTitle(title, link) {
+      const titleEl = document.createElement('h3');
+      titleEl.classList.add('article-title', 'hover:text-gray-500', 'cursor-pointer');
+
+      const linkEl = document.createElement('a');
+      linkEl.href = link;
+      linkEl.innerText = title;
+
+      titleEl.appendChild(linkEl);
+      return titleEl;
+    }
+
+    /**
+     * Create the article description element.
+     * @param {string} description - The article description.
+     * @returns {HTMLElement} - The description element.
+     */
+    function createArticleDescription(description) {
+      const descriptionEl = document.createElement('p');
+      descriptionEl.classList.add('mt-2', 'article-subtitle');
+      descriptionEl.innerText = description;
+
+      return descriptionEl;
+    }
+
+    // Fetch and render articles on page load
+    fetchAndRenderArticles();
+  </script>
+</body>
+</html>
