@@ -7,22 +7,22 @@
     "genres": ["Economics", "Finance", "Politics"],
     "images": [
       {
-        "url": "/images/article_4_9_2025_1.jpg",
+        "url": "images/article_4_9_2025_1.jpg",
         "description": "Cover image showing tariff equation",
         "credit": "Original illustration"
       },
       {
-        "url": "/images/article_4_9_2025_2.jpg",
+        "url": "images/article_4_9_2025_2.jpg",
         "description": "Tariff equation with annotations",
         "credit": "USTR.gov with author annotations"
       },
       {
-        "url": "/images/article_4_9_2025_3.jpg",
+        "url": "images/article_4_9_2025_3.jpg",
         "description": "Simplified tariff formula",
         "credit": "Author's simplification"
       },
       {
-        "url": "/images/article_4_9_2025_4.jpg",
+        "url": "images/article_4_9_2025_4.jpg",
         "description": "Vietnam tariff calculation example",
         "credit": "Based on White House data [https://ustr.gov/countries-regions/southeast-asia-pacific/vietnam]"
       }
@@ -31,11 +31,11 @@
       "<p>Understanding Trump's Tariff Equation</p>",
       "<p>As a college sophomore, who has taken not much further than basic economics, finance, and calculus coursework, I was surprised at how accessible the Trump administration's tariff formula was. As per my responsibility as a finance student, I will explain exactly how this formula works, how the Trump administration wants it to work, and the problems I observed with it.</p>",
       "<p>The exact formula, sourced from <a href='https://ustr.gov/issue-areas/reciprocal-tariff-calculations' target='_blank'>https://ustr.gov/issue-areas/reciprocal-tariff-calculations</a>, with my annotations, is as follows:</p>",
-      "<img src='/images/article_4_9_2025_2.jpg' alt='Tariff equation with annotations' style='max-width:100%; height:auto;'>",
+      "<img src='images/article_4_9_2025_2.jpg' alt='Tariff equation with annotations' style='max-width:100%; height:auto;'>",
       "<p>Everything is relatively straightforward except for the denominator, specifically \"ε\" and \"φ\". These values are set simply to -4 and 0.25, respectively, as per the government website, so multiplied they yield to -1. However, they are still important to understand. ε, put simply, represents the rate at which the amount we buy of any product changes when its price changes. So, at ε=-4, any 1% increase in price means 4% less purchases. φ represents \"passthrough\", the actual change in price the consumer pays with tariffs. Even if tariffs are 100% on a $100 product, consumers would only pay $125 because φ = 0.25. There is a problem with this passthrough percentage which will be touched on later in the article. Overall, this is the simplified version of the formula:</p>",
-      "<img src='/images/article_4_9_2025_3.jpg' alt='Simplified tariff formula' style='max-width:100%; height:auto;'>",
+      "<img src='images/article_4_9_2025_3.jpg' alt='Simplified tariff formula' style='max-width:100%; height:auto;'>",
       "<p>When trading with other countries, the USA often buys more than they sell to them. This means that the USA is giving more money than they are getting. This is how other countries are \"ripping us off\" as per Trump's view. A country that exemplifies this is Vietnam, who exports much more than they import with the USA. This formula in action with Vietnam as an example country, and data sourced from the White House, is as follows:</p>",
-      "<img src='/images/article_4_9_2025_4.jpg' alt='Vietnam tariff calculation example' style='max-width:100%; height:auto;'>",
+      "<img src='images/article_4_9_2025_4.jpg' alt='Vietnam tariff calculation example' style='max-width:100%; height:auto;'>",
       "<p>This aligns with the 90% seen in the cover image. However, this 90.4%, as well as all the other tariff rates, were cut in half because Trump noted that charging the full reciprocal amount \"would have been tough for a lot of countries\" during his April 2nd announcement, thus charging Vietnam 46% instead. Furthermore, any tariff rate that is below 10% is set at 10% by default.</p>",
       "<p>Does it actually work? In theory, yes, but in practice, absolutely not. This is the kind of equation that works \"ceteris paribus\", meaning that nothing else changes. If nothing else were to change, meaning that Vietnam didn't retaliate in any way when hit with the 90.4% tariff, the price to import would be so expensive that USA consumers and businesses would only want to import exactly $13.1 billion, which is what we export to Vietnam. This works using the numbers provided by the government.</p>",
       "<p>However, the myriad of real-world events that would follow a near 50%, let alone a near 100% tariff to Vietnam and other countries would obfuscate the Trump administration's predictions for the future. Events like:</p>",
