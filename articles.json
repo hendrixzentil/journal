@@ -15,6 +15,14 @@
       "timezone": "EST",
       "description": "It seems elegantly simple, but close inspection reveals a myriad of issues.",
       "file": "article_4_9_2025.json"
+    },
+    {
+      "title": "Trump's Tariff Pause: Market Implications",
+      "date": "2025-4-10",
+      "time": "10:30 PM",
+      "timezone": "EST",
+      "description": "President Trump's modified tariff approach, isolating China while offering temporary relief to other trading partners: How will it affect the market?",
+      "file": "article_4_10_2025.json"
     }
   ],
   "readings": [
