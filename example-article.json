@@ -1,13 +1,13 @@
 {
   "title": "Sample Article Title",
-  "date": "2024-11-20",
+  "date": "2025-11-20",
   "time": "2:45 PM",
   "timezone": "EST",
   "description": "Sample description",
-  "genres": ["Finance", "Opinion"],
+  "genres": ["Finance", "Economics"],
   "images": [
     {
-      "url": "testimage.jpg",
+      "url": "images/testimage.jpg",
       "description": "Main image description",
       "credit": "Photo by Sample Photographer"
     }
